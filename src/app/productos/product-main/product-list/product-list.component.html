@@ -1,0 +1,30 @@
+<p>product-list works!</p>
+<div class="row">
+  <div class="col-4">
+    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""
+      (input)="busqueda = $event.target.value">
+  </div>
+  <div>
+    <a name="" id="" class="btn btn-primary text-white" role="button" (click)="buscar()">Buscar producto</a>
+  </div>
+  <div class="ml-2">
+    <a *ngIf="modoLista" class="btn btn-success text-white" role="button" (click)="agregarSeleccion()">Añadir seleccionados a monitoreados</a>
+  </div>
+</div>
+
+<div class=" mt-2">
+  <ul *ngIf="modoLista">
+    <app-product *ngFor="let prod of productList" [product]="prod" [modoLista]="modoLista" (checked)="addMonitor($event)" (unchecked)="removeMonitor($event)"></app-product>
+  </ul>
+  <ul *ngIf="modoMonitoreo">
+    <app-product *ngFor="let prod of productListMonitoreo" [product]="prod" [modoLista]="modoLista"></app-product>
+  </ul>
+
+  <div class="alert alert-danger" role="alert" *ngIf="modoLista && productList.length == 0">
+    <strong>Ningún producto concuerda con la búsqueda</strong>
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="modoMonitoreo && productListMonitoreo.length == 0">
+    <strong>Ningún producto concuerda con la búsqueda</strong>
+  </div>
+
+</div>
