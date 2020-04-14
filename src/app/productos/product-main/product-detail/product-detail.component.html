@@ -1,0 +1,27 @@
+<p>product-detail works!</p>
+<div class="media col">
+  <img class="mr-3" src="https://picsum.photos/id/{{product.uid}}/100/100" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0 mb-1"></h5>
+    <p>Precio (MXN): ${{product.precio}}</p>
+    <p>marca: {{product.marca}}</p>
+    <p>Descripción: {{product.descripcion}}</p>
+    <p>Existencia: {{product.existencia}}</p>
+  </div>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Atributo</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Unidad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let spec of product.especificacion">
+      <td scope="row">{{spec.atributo}}</td>
+      <td>{{spec.valor}}</td>
+      <td>{{spec.unidad}}</td>
+    </tr>
+  </tbody>
+</table>
