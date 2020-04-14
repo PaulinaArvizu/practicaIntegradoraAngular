@@ -1,0 +1,167 @@
+<!-- <form action="" *ngIf="modoNew"> -->
+<form #f="ngForm" (ngSubmit)="procesarFormulario(f)">
+  <div *ngIf="modoNew">
+    <div class="media">
+      <div class="media-body">
+        <div class="form-group">
+          <label for="">uid (clave de producto)</label>
+          <input type="number" class="form-control" min="0" (input)="newProduct.uid = $event.target.value; isValid()" required>
+        </div>
+        <div class="form-group">
+          <label for="">Nombre de producto</label>
+          <input type="text" class="form-control"
+            (input)="newProduct.nombre = $event.target.value; isValid()" required>
+        </div>
+        <div class="form-group">
+          <label for="">Marca</label>
+          <select class="custom-select" name="marca" (change)="newProduct.marca = $event.target.value; isValid()">
+            <option value="" selected>Seleccionar una opción</option>
+            <option *ngFor="let marca of marcas" value="{{marca}}">{{marca}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Precio</label>
+          <input type="number" class="form-control"
+            (input)="newProduct.precio = $event.target.value" required>
+        </div>
+        <div class="form-group">
+          <label for="">Breve descripción</label>
+          <input type="text" class="form-control"
+            (input)="newProduct.descripcion = $event.target.value" required>
+        </div>
+        <div class="form-group">
+          <label for="">Existencia</label>
+          <input type="number" class="form-control"
+            (input)="newProduct.existencia = $event.target.value" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <label for="">Atributo</label>
+        <input #v1 type="text" (input)="spec.atributo = $event.target.value" class="form-control">
+      </div>
+      <div class="col-2">
+        <label for="">Valor</label>
+        <input #v2 type="text" (input)="spec.valor = $event.target.value" class="form-control">
+      </div>
+      <div class="col-2">
+        <label for="">Unidad</label>
+        <input #v3 type="text" (input)="spec.unidad = $event.target.value" class="form-control">
+      </div>
+      <div>
+        <label for="" style="color:white">añadir</label>
+        <a name="" id="" class="form-control btn btn-success text-white" role="button" (click)="addSpec()"> <i
+            class="fas fa-plus-circle"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>Atributo</th>
+            <th>Valor</th>
+            <th>Unidad</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of newProduct.especificacion">
+            <td scope="row">{{e.atributo}}</td>
+            <td>{{e.valor}}</td>
+            <td>{{e.unidad}}</td>
+            <td><button class="btn btn-primary text-white" role="button" (click)="deleteSpec(e)"><i class="fas fa-trash"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------- -->
+
+  <div *ngIf="modoEdit">
+    <div class="media">
+      <a class="d-flex align-self-bottom" href="#">
+        <img class="mr-3" src="https://picsum.photos/id/{{newProduct.uid}}/100/100" alt="Generic placeholder image">
+      </a>
+      <div class="media-body">
+        <div class="form-group">
+          <label for="">uid (clave de producto)</label>
+          <input type="number" class="form-control" min="0" value="{{newProduct.uid}}" required disabled>
+        </div>
+        <div class="form-group">
+          <label for="">Nombre de producto</label>
+          <input type="text" class="form-control" value="{{newProduct.nombre}}"
+            (input)="newProduct.nombre = $event.target.value; isValid()" required>
+        </div>
+        <div class="form-group">
+          <label for="">Marca</label>
+          <select class="custom-select" name="marca" (change)="newProduct.marca = $event.target.value; isValid()">
+            <option value="">Seleccionar una opción</option>
+            <option *ngFor="let marca of marcas" [attr.selected]="product" value="{{marca}}">{{marca}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="">Precio</label>
+          <input type="number" class="form-control" value="{{newProduct.precio}}"
+            (input)="newProduct.precio = $event.target.value" required>
+        </div>
+        <div class="form-group">
+          <label for="">Breve descripción</label>
+          <input type="text" class="form-control" value="{{newProduct.descripcion}}"
+            (input)="newProduct.descripcion = $event.target.value" required>
+        </div>
+        <div class="form-group">
+          <label for="">Existencia</label>
+          <input type="number" class="form-control" value="{{newProduct.existencia}}"
+            (input)="newProduct.existencia = $event.target.value" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <label for="">Atributo</label>
+        <input #v1 type="text" (input)="spec.atributo = $event.target.value" class="form-control">
+      </div>
+      <div class="col-2">
+        <label for="">Valor</label>
+        <input #v2 type="text" (input)="spec.valor = $event.target.value" class="form-control">
+      </div>
+      <div class="col-2">
+        <label for="">Unidad</label>
+        <input #v3 type="text" (input)="spec.unidad = $event.target.value" class="form-control">
+      </div>
+      <div>
+        <label for="" style="color:white">añadir</label>
+        <a name="" id="" class="form-control btn btn-success text-white" role="button" (click)="addSpec()"> <i
+            class="fas fa-plus-circle"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <table class="table mt-3">
+        <thead>
+          <tr>
+            <th>Atributo</th>
+            <th>Valor</th>
+            <th>Unidad</th>
+            <th>Borrar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let spec of newProduct.especificacion">
+            <td scope="row">{{spec.atributo}}</td>
+            <td>{{spec.valor}}</td>
+            <td>{{spec.unidad}}</td>
+            <td><button class="btn btn-primary text-white" role="button" (click)="deleteSpec(spec)"><i class="fas fa-trash"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Guardar" [attr.disabled]="disabled ? true : null">
+  <button class="btn btn-secondary ml-3" routerLink="/product">Cancelar</button>
+
+</form>
